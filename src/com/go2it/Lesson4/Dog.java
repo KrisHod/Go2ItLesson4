@@ -1,6 +1,10 @@
 package com.go2it.Lesson4;
 
 public class Dog {
+
+    enum EARLENGTH {LONG, SHORT};
+
+    private EARLENGTH earlength;
     private String ears;
     private String teeth;
     private String paws;
@@ -11,7 +15,9 @@ public class Dog {
     private String color;
     private String breed;
 
-    public Dog(String ears, String teeth, String paws, String head, boolean hasTail, String name) {
+    public Dog(EARLENGTH earlength, String ears, String teeth, String paws, String head, boolean hasTail, String name) {
+
+        this.earlength = earlength;
         this.ears = ears;
         this.teeth = teeth;
         this.paws = paws;
@@ -30,8 +36,8 @@ public class Dog {
         this.age = age;
     }
 
-    public String walk(boolean likeWalk) {
-        if (likeWalk == true) {
+    public String walk(boolean isLikeWalk) {
+        if (isLikeWalk) {
             return " likes to walk";
         } else {
             return " doesn't like to walk";
@@ -47,7 +53,7 @@ public class Dog {
     }
 
     public String bark(boolean hasLoudVoice) {
-        if (hasLoudVoice == true) {
+        if (hasLoudVoice) {
             return " barks loud";
         } else {
             return " barks quiet";
@@ -103,7 +109,7 @@ public class Dog {
     }
 
     public String setHasTail(boolean hasTail) {
-        if (hasTail == true) {
+        if (hasTail) {
             return "yes";
         } else {
             return "no";
@@ -140,7 +146,7 @@ public class Dog {
     }
 
     public static void main(String[] args) {
-        Dog barbos = new Dog("long", "white", "short", "small", false, "Barbos");
+        Dog barbos = new Dog(EARLENGTH.SHORT,"long", "white", "short", "small", false, "Barbos");
         Dog baron = new Dog("short", "white", "long", "huge", true, "Baron", 5);
 
         System.out.println("The first dog has next properties: " + barbos);
