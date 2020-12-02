@@ -6,22 +6,21 @@ import java.util.Scanner;
 public class ATM {
     private int currentSumInATM;
     private int numberOfATM;
-    private int dataOfInstallation;
+    private int currentSoftwareVersion;
 
-    //See it in this way: ATM is created on the factory (constructor).
-//Then staff installs it on the spot and loads money (another method).
-// Otherwise, ATM would be transported with money inside already :)
-    public ATM(int currentSumInATM, int numberOfATM, int dataOfInstallation) {
+    public ATM(int currentSumInATM, int numberOfATM, int currentSoftwareVersion) {
         this.currentSumInATM = currentSumInATM;
         this.numberOfATM = numberOfATM;
-        this.dataOfInstallation = dataOfInstallation;
+        this.currentSoftwareVersion = currentSoftwareVersion;
         quantityOfATM++;
+        addATMToArray(ATMNetwork, numberOfATM);
     }
 
     public ATM(int currentSumInATM, int numberOfATM) { //overloaded constructor
         this.currentSumInATM = currentSumInATM;
         this.numberOfATM = numberOfATM;
         quantityOfATM++;
+        addATMToArray(ATMNetwork, numberOfATM);
     }
 
     public int getCurrentSumInATM() {
@@ -38,14 +37,6 @@ public class ATM {
 
     public void setNumberOfATM(int numberOfATM) {
         this.numberOfATM = numberOfATM;
-    }
-
-    public int getDataOfInstallation() {
-        return dataOfInstallation;
-    }
-
-    public void setDataOfInstallation(int dataOfInstallation) {
-        this.dataOfInstallation = dataOfInstallation;
     }
 
     public static int getQuantityOfATM() {
@@ -72,12 +63,36 @@ public class ATM {
         ATM.numberOfDepositsToAllATM = numberOfDepositsToAllATM;
     }
 
+    public int getCurrentSoftwareVersion() {
+        return currentSoftwareVersion;
+    }
+
+    public int setCurrentSoftwareVersion(int currentVersion) {
+        this.currentSoftwareVersion = currentVersion;
+        return currentVersion;
+    }
+
     private static int quantityOfATM = 0;
     private static int numberOfWithdrawsFromAllATM = 0;
     private static int numberOfDepositsToAllATM = 0;
+    private static int theNewestSoftwareVersion;
+    private static int previousSoftwareVersion;
+
+    public static ArrayList<Integer> getATMNetwork() {
+        return ATMNetwork;
+    }
+
+    public static void setATMNetwork(ArrayList<Integer> ATMNetwork) {
+        ATM.ATMNetwork = ATMNetwork;
+    }
 
     //    List instead of ArrayList --> best practice.
-    static ArrayList<ATM> ATMNetwork = new ArrayList<>();
+    static ArrayList<Integer> ATMNetwork = new ArrayList<>();
+
+    public static ArrayList<Integer> addATMToArray(ArrayList<Integer> arr, int numberOfATM) { //create an Arraylist of ATM
+        arr.add(numberOfATM);
+        return arr;
+    }
 
 
     public void operateWithATM(CreditCard card) { // check if pin is correct
@@ -156,27 +171,25 @@ public class ATM {
         }
     }
 
-    public static ArrayList<ATM> addATMToArray(ArrayList<ATM> arr, ATM atm) { //create an Arraylist of ATM
-        arr.add(atm);
-        return arr;
+    public static void installNewVersion(Software newSoftware, ATM atm) throws InterruptedException {
+        System.out.println("Number of version is " + atm.getCurrentSoftwareVersion());
+        if (atm.getCurrentSoftwareVersion() < newSoftware.getVersion()) {
+            previousSoftwareVersion= atm.getCurrentSoftwareVersion();
+            System.out.println("The update process has started... Wait please");
+            Thread.sleep(4000);
+            System.out.println("Number of new version is " + atm.setCurrentSoftwareVersion(newSoftware.getVersion())
+                    + " which was released " + newSoftware.getDate());
+        }
+        else {
+            System.out.println("Atm has the newest version");
+        }
     }
 
-    public static void main(String[] args) {
-        ATM atm1 = new ATM(15000, 4564, 2020);
-        atm1.setCurrentSumInATM(5000);
-        ATM atm2 = new ATM(20000, 2212);
-
-        CreditCard card1 = new CreditCard("1111222233334444", 500);
-        CreditCard card2 = new CreditCard("1111222233335555", 1000);
-
-        atm1.operateWithATM(card1);
-
-        System.out.println("Number of withdraws from all ATM is " + numberOfWithdrawsFromAllATM);
-        System.out.println("Number of deposit from all ATM is " + numberOfDepositsToAllATM);
-
-        for (ATM arr : ATMNetwork) {
-            System.out.println(arr);
-
-        }
+    public static void recoverSoftware(ATM atm) throws InterruptedException {
+        System.out.println("Something went wrong. \nNumber of version is " + atm.getCurrentSoftwareVersion() +
+                " but it seems like it doesn't fit :-( \nThe recovery process has started... Wait please");
+        atm.setCurrentSoftwareVersion(previousSoftwareVersion);
+        Thread.sleep(4000);
+        System.out.println("The previous version number " + previousSoftwareVersion + " was installed");
     }
 }
