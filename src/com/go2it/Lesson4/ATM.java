@@ -1,6 +1,7 @@
 package com.go2it.Lesson4;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class ATM {
@@ -8,19 +9,27 @@ public class ATM {
     private int numberOfATM;
     private int currentSoftwareVersion;
 
+    private static int quantityOfATM = 0;
+    private static int numberOfWithdrawsFromAllATM = 0;
+    private static int numberOfDepositsToAllATM = 0;
+    private static int theNewestSoftwareVersion;
+    private static int previousSoftwareVersion;
+
+    static List<Integer> ATMNetwork = new ArrayList<>();
+
     public ATM(int currentSumInATM, int numberOfATM, int currentSoftwareVersion) {
         this.currentSumInATM = currentSumInATM;
         this.numberOfATM = numberOfATM;
         this.currentSoftwareVersion = currentSoftwareVersion;
         quantityOfATM++;
-        addATMToArray(ATMNetwork, numberOfATM);
+        ATMNetwork.add(numberOfATM);
     }
 
     public ATM(int currentSumInATM, int numberOfATM) { //overloaded constructor
         this.currentSumInATM = currentSumInATM;
         this.numberOfATM = numberOfATM;
         quantityOfATM++;
-        addATMToArray(ATMNetwork, numberOfATM);
+        ATMNetwork.add(numberOfATM);
     }
 
     public int getCurrentSumInATM() {
@@ -72,26 +81,28 @@ public class ATM {
         return currentVersion;
     }
 
-    private static int quantityOfATM = 0;
-    private static int numberOfWithdrawsFromAllATM = 0;
-    private static int numberOfDepositsToAllATM = 0;
-    private static int theNewestSoftwareVersion;
-    private static int previousSoftwareVersion;
+    public static int getTheNewestSoftwareVersion() {
+        return theNewestSoftwareVersion;
+    }
 
-    public static ArrayList<Integer> getATMNetwork() {
+    public static void setTheNewestSoftwareVersion(int theNewestSoftwareVersion) {
+        ATM.theNewestSoftwareVersion = theNewestSoftwareVersion;
+    }
+
+    public static int getPreviousSoftwareVersion() {
+        return previousSoftwareVersion;
+    }
+
+    public static void setPreviousSoftwareVersion(int previousSoftwareVersion) {
+        ATM.previousSoftwareVersion = previousSoftwareVersion;
+    }
+
+    public static List<Integer> getATMNetwork() {
         return ATMNetwork;
     }
 
-    public static void setATMNetwork(ArrayList<Integer> ATMNetwork) {
+    public static void setATMNetwork(List<Integer> ATMNetwork) {
         ATM.ATMNetwork = ATMNetwork;
-    }
-
-    //    List instead of ArrayList --> best practice.
-    static ArrayList<Integer> ATMNetwork = new ArrayList<>();
-
-    public static ArrayList<Integer> addATMToArray(ArrayList<Integer> arr, int numberOfATM) { //create an Arraylist of ATM
-        arr.add(numberOfATM);
-        return arr;
     }
 
 
@@ -169,27 +180,5 @@ public class ATM {
             System.out.println("Invalid choice");
             anotherTransaction(card);
         }
-    }
-
-    public static void installNewVersion(Software newSoftware, ATM atm) throws InterruptedException {
-        System.out.println("Number of version is " + atm.getCurrentSoftwareVersion());
-        if (atm.getCurrentSoftwareVersion() < newSoftware.getVersion()) {
-            previousSoftwareVersion= atm.getCurrentSoftwareVersion();
-            System.out.println("The update process has started... Wait please");
-            Thread.sleep(4000);
-            System.out.println("Number of new version is " + atm.setCurrentSoftwareVersion(newSoftware.getVersion())
-                    + " which was released " + newSoftware.getDate());
-        }
-        else {
-            System.out.println("Atm has the newest version");
-        }
-    }
-
-    public static void recoverSoftware(ATM atm) throws InterruptedException {
-        System.out.println("Something went wrong. \nNumber of version is " + atm.getCurrentSoftwareVersion() +
-                " but it seems like it doesn't fit :-( \nThe recovery process has started... Wait please");
-        atm.setCurrentSoftwareVersion(previousSoftwareVersion);
-        Thread.sleep(4000);
-        System.out.println("The previous version number " + previousSoftwareVersion + " was installed");
     }
 }

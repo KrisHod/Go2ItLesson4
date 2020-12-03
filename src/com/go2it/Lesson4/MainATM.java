@@ -11,17 +11,17 @@ public class MainATM {
 
         Software version = new Software(3);
 
-//        atm1.operateWithATM(card1);
-//
-//        System.out.println("Number of withdraws from all ATM is " + ATM.getNumberOfWithdrawsFromAllATM());
-//        System.out.println("Number of deposit from all ATM is " + ATM.getNumberOfDepositsToAllATM());
-//
-//        for (int arr : ATM.getATMNetwork()) {
-//            System.out.println(arr);
-//        }
+        atm1.operateWithATM(card1);
 
-        ATM.installNewVersion(version, atm1);
+        System.out.println("Number of withdraws from all ATM is " + ATM.getNumberOfWithdrawsFromAllATM());
+        System.out.println("Number of deposit from all ATM is " + ATM.getNumberOfDepositsToAllATM());
+
+        for (int arr : ATM.getATMNetwork()) {
+            System.out.println(arr);
+        }
+
+        ATMService.installNewVersion(version, atm1);
         System.out.println();
-        ATM.recoverSoftware(atm1);
+        ATMService.recoverSoftware(atm1);
     }
 }

@@ -1,20 +1,20 @@
 package com.go2it.Lesson4;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class Software {
     private int version;
-    private LocalDate date;
+    private LocalDateTime date;
     private String developerOfVersion;
 
     public Software(int version) {
         this.version = version;
-        this.date = LocalDate.now();
+        this.date = LocalDateTime.now();
     }
 
-    public Software(int version, LocalDate date, String developerOfVersion) {
+    public Software(int version, String developerOfVersion) {
         this.version = version;
-        this.date = date;
+        this.date = LocalDateTime.now();
         this.developerOfVersion = developerOfVersion;
     }
 
@@ -34,11 +34,11 @@ public class Software {
         this.version = version;
     }
 
-    public LocalDate getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 
-    public void setDate(LocalDate date) {
+    public void setDate(LocalDateTime date) {
         this.date = date;
     }
 }
