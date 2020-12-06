@@ -11,6 +11,7 @@ public class MovieDB2Main {
             }
         }
 
-
+        System.out.println(movieDB2.calculateAverageRatingForMovie(movieDB2));
+        System.out.println(movieDB2.calculateAverageRatingForReviewer(movieDB2));
     }
 }
