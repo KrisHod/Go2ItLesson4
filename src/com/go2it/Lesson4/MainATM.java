@@ -1,7 +1,7 @@
 package com.go2it.Lesson4;
 
 public class MainATM {
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args)  {
         ATM atm1 = new ATM(15000, 4564, 1);
         atm1.setCurrentSumInATM(5000);
         ATM atm2 = new ATM(20000, 2212, 2);
@@ -20,8 +20,16 @@ public class MainATM {
             System.out.println(arr);
         }
 
-        ATMService.installNewVersion(version, atm1);
+        try {
+            ATMService.installNewVersion(version, atm1);
+        } catch (InterruptedException | ATMService.VersionTooOldException e) {
+            e.printStackTrace();
+        }
         System.out.println();
-        ATMService.recoverSoftware(atm1);
+        try {
+            ATMService.recoverSoftware(atm1);
+        } catch (InterruptedException e) {
+            System.out.println(e.getMessage());
+        }
     }
 }

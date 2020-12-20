@@ -24,11 +24,12 @@ public class Dog {
 //        this.hasFoundHome = false;
 //    }
 //
-//    public Dog(String name, double age, String breed, char sex) {
+//    public Dog(String name, double age, String breed, char sex, int id) {
 //        this.name = name;
 //        this.age = age;
 //        this.breed = breed;
 //        this.sex = sex;
+//        this.id = id;
 //    }
 
     public int getId() {

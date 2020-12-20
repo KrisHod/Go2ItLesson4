@@ -38,12 +38,16 @@ public class CreditCard {
         this.cardBalance = cardBalance;
     }
 
-    public float setCardBalanceAfterWithdraw (float sum){
-        cardBalance -= sum;
-        return cardBalance;
+    public float setCardBalanceAfterWithdraw(float sum) throws IllegalArgumentException {
+        if ((cardBalance -= sum) < 0) {
+            throw new IllegalArgumentException("Not enough money in the account to process this transaction");
+        } else {
+            cardBalance -= sum;
+            return cardBalance;
+        }
     }
 
-    public float setCardBalanceAfterDeposit (float sum){
+    public float setCardBalanceAfterDeposit(float sum) {
         cardBalance += sum;
         return cardBalance;
     }

@@ -87,7 +87,8 @@ public class DogService {
         int age = in.nextInt();
         System.out.println("Please enter the sex of the dog you want to add");
         char sex = in.next().charAt(0);
-        getListOfAllDog().add(new Dog());
+        getListOfAllDog().add(new Dog()); //the constructor should be the most suitable place to set all the values
+                                          // но тогда не выполниться проверка, которая в setter
         getListOfAllDog().get(getListOfAllDog().size()-1).setId(getListOfAllDog().size());
         getListOfAllDog().get(getListOfAllDog().size()-1).setAge(age);
         getListOfAllDog().get(getListOfAllDog().size()-1).setName(name);
@@ -102,7 +103,7 @@ public class DogService {
         }
     }
 
-    public static void viewAllAvailableDogs() {
+    public static void viewAllAvailableDogs() { //This is an overhead. Especially, if you have 1 million dogs. A lot of data will be duplicated
         for (int i = 0; i < listOfAllDogs.size(); i++) {
             if (!listOfAllDogs.get(i).isHasFoundHome()) {
                 listOfHomelessDogs.add(listOfAllDogs.get(i));

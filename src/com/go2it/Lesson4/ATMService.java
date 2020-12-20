@@ -1,7 +1,7 @@
 package com.go2it.Lesson4;
 
 public class ATMService {
-    public static void installNewVersion(Software newSoftware, ATM atm) throws InterruptedException {
+    public static void installNewVersion(Software newSoftware, ATM atm) throws InterruptedException, VersionTooOldException {
         System.out.println("Number of version is " + atm.getCurrentSoftwareVersion());
         if (atm.getCurrentSoftwareVersion() < newSoftware.getVersion()) {
             ATM.setPreviousSoftwareVersion(atm.getCurrentSoftwareVersion());
@@ -17,7 +17,7 @@ public class ATMService {
                     + " which was released " + newSoftware.getDate());
         }
         else {
-            System.out.println("Atm has the newest version");
+            throw new VersionTooOldException("This version of software is too old");
         }
     }
 
@@ -29,4 +29,9 @@ public class ATMService {
         System.out.println("The previous version number " + ATM.getPreviousSoftwareVersion() + " was installed");
     }
 
+    public static class VersionTooOldException extends Exception {
+        public VersionTooOldException(String message) {
+            super(message);
+        }
+    }
 }

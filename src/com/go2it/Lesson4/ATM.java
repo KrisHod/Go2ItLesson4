@@ -136,11 +136,15 @@ public class ATM {
                 float sumToWithdraw;
                 System.out.println("Please enter amount to withdraw");
                 sumToWithdraw = in.nextFloat();
-                if (currentSumInATM > sumToWithdraw && card.getCardBalance() > sumToWithdraw) {
-                    currentSumInATM -= sumToWithdraw;
-                    card.setCardBalanceAfterWithdraw(sumToWithdraw);
-                    numberOfWithdrawsFromAllATM++;
-                    System.out.println("You have withdrawn " + sumToWithdraw + ". Your current balance is " + card.getCardBalance());
+                if (currentSumInATM > sumToWithdraw) {
+                    try {
+                        currentSumInATM -= sumToWithdraw;
+                        card.setCardBalanceAfterWithdraw(sumToWithdraw);
+                        numberOfWithdrawsFromAllATM++;
+                        System.out.println("You have withdrawn " + sumToWithdraw + ". Your current balance is " + card.getCardBalance());
+                    } catch (IllegalArgumentException e) {
+                        System.out.println(e.getMessage());
+                    }
                     anotherTransaction(card);
                 } else {
                     System.out.println("Operation is impossible");
