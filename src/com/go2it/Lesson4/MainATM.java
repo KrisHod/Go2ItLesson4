@@ -22,13 +22,9 @@ public class MainATM {
 
         try {
             ATMService.installNewVersion(version, atm1);
-        } catch (InterruptedException | ATMService.VersionTooOldException e) {
-            e.printStackTrace();
-        }
-        System.out.println();
-        try {
             ATMService.recoverSoftware(atm1);
-        } catch (InterruptedException e) {
+        } catch (Exception e) {
+            e.printStackTrace();
             System.out.println(e.getMessage());
         }
     }

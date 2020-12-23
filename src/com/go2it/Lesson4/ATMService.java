@@ -1,24 +1,18 @@
 package com.go2it.Lesson4;
 
 public class ATMService {
-    public static void installNewVersion(Software newSoftware, ATM atm) throws InterruptedException, VersionTooOldException {
+    public static void installNewVersion(Software newSoftware, ATM atm) throws InterruptedException, SoftwareUpdateException {
         System.out.println("Number of version is " + atm.getCurrentSoftwareVersion());
-        if (atm.getCurrentSoftwareVersion() < newSoftware.getVersion()) {
-            ATM.setPreviousSoftwareVersion(atm.getCurrentSoftwareVersion());
-            System.out.println("The update process has started... Wait please");
-            Thread.sleep(4000);
-
-//            Setter by convention is not supposed to return anything.
-//The problem you have (and your flow proves it) - ATM lives separately from Software.
-// It should not be the case since ATM should contain/encapsulate the software.
-// Then you would be able to get the software version from ATM: atm.getCurrestSoftware().getVersion()
-
-            System.out.println("Number of new version is " + atm.setCurrentSoftwareVersion(newSoftware.getVersion())
-                    + " which was released " + newSoftware.getDate());
+        if (atm.getCurrentSoftwareVersion() > newSoftware.getVersion()) {
+            throw new SoftwareUpdateException("This version of software is too old");
         }
-        else {
-            throw new VersionTooOldException("This version of software is too old");
-        }
+
+        ATM.setPreviousSoftwareVersion(atm.getCurrentSoftwareVersion());
+        System.out.println("The update process has started... Wait please");
+        Thread.sleep(4000);
+
+        System.out.println("Number of new version is " + atm.setCurrentSoftwareVersion(newSoftware.getVersion())
+                + " which was released " + newSoftware.getDate());
     }
 
     public static void recoverSoftware(ATM atm) throws InterruptedException {
@@ -29,8 +23,8 @@ public class ATMService {
         System.out.println("The previous version number " + ATM.getPreviousSoftwareVersion() + " was installed");
     }
 
-    public static class VersionTooOldException extends Exception {
-        public VersionTooOldException(String message) {
+    public static class SoftwareUpdateException extends Exception {
+        public SoftwareUpdateException(String message) {
             super(message);
         }
     }
